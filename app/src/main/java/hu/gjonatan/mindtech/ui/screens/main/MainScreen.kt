@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
@@ -31,6 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import hu.gjonatan.mindtech.data.models.PokemonLink
+import hu.gjonatan.mindtech.ui.components.ErrorContent
+import hu.gjonatan.mindtech.ui.components.LoadingIndicator
 import hu.gjonatan.mindtech.ui.theme.MindtechTheme
 import kotlinx.collections.immutable.persistentListOf
 
@@ -69,9 +69,7 @@ private fun MainScreenContent(
     ) {
         when (uiState) {
             is MainScreenUiState.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(150.dp)
-                )
+                LoadingIndicator()
             }
 
             is MainScreenUiState.Error -> {
@@ -84,16 +82,6 @@ private fun MainScreenContent(
                 DefaultContent(uiState, onTypeSelected, onSearchQueryUpdate, detailsButtonClicked)
             }
         }
-    }
-}
-
-@Composable
-fun ErrorContent(
-    onRefreshClick: () -> Unit
-) {
-    Text("Something went wrong")
-    Button(onClick = onRefreshClick) {
-        Text("Refresh")
     }
 }
 

@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.ktor.serialization.json)
 
     implementation(libs.kotlinx.collections.immutable)
+    
+    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
