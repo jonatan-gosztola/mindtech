@@ -26,6 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import hu.gjonatan.mindtech.data.models.PokemonLink
@@ -163,21 +165,31 @@ private fun DefaultContent(
     }
 }
 
+class MainScreenUiStateProvider : PreviewParameterProvider<MainScreenUiState> {
+    override val values = sequenceOf(
+        MainScreenUiState.Default(
+            types = persistentListOf("fire", "water", "grass"),
+            selectedType = "fire",
+            searchQuery = "",
+            pokemons = persistentListOf(
+                PokemonLink("Bulbasaur", "asd"),
+                PokemonLink("Ivysaur", "asd"),
+                PokemonLink("Venusaur", "asd")
+            )
+        ),
+        MainScreenUiState.Loading,
+        MainScreenUiState.Error
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
-private fun MainScreenContentPreview() {
+private fun MainScreenContentPreview(
+    @PreviewParameter(MainScreenUiStateProvider::class) uiState: MainScreenUiState
+) {
     MindtechTheme {
         MainScreenContent(
-            uiState = MainScreenUiState.Default(
-                types = persistentListOf("fire", "water", "grass"),
-                selectedType = "fire",
-                searchQuery = "",
-                pokemons = persistentListOf(
-                    PokemonLink("Bulbasaur", "asd"),
-                    PokemonLink("Ivysaur", "asd"),
-                    PokemonLink("Venusaur", "asd")
-                )
-            ),
+            uiState = uiState,
             onTypeSelected = {},
             onSearchQueryUpdate = {},
             detailsButtonClicked = {},
