@@ -30,7 +30,7 @@ class ApiDataSource(
 
         return response.pokemon.map { entry ->
             PokemonLink(
-                name = entry.pokemon.name,
+                name = entry.pokemon.name.replaceFirstChar { it.uppercase() },
                 detailsUrl = entry.pokemon.url
             )
         }

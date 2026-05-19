@@ -24,6 +24,7 @@ import hu.gjonatan.mindtech.ui.screens.main.MainScreen
 import hu.gjonatan.mindtech.ui.screens.main.MainScreenViewModel
 import hu.gjonatan.mindtech.ui.theme.MindtechTheme
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,13 +48,15 @@ class MainActivity : ComponentActivity() {
                             is Screen.Main -> NavEntry(screenKey) {
                                 MainScreen(
                                     viewModel = koinViewModel<MainScreenViewModel>(),
-                                    detailsButtonClicked = { backStack.add(Screen.Details) }
+                                    detailsButtonClicked = { url -> backStack.add(Screen.Details(url)) }
                                 )
                             }
 
                             is Screen.Details -> NavEntry(screenKey) {
                                 DetailsScreen(
-                                    viewModel = koinViewModel<DetailsScreenViewModel>()
+                                    viewModel = koinViewModel<DetailsScreenViewModel>(
+                                        parameters = { parametersOf(screenKey.name) }
+                                    )
                                 )
                             }
 

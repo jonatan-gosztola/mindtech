@@ -10,5 +10,5 @@ sealed interface Screen : NavKey {
     data object Main : Screen
 
     @Serializable
-    data object Details : Screen
+    data class Details(val name: String) : Screen
 }
